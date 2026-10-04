@@ -1,0 +1,41 @@
+@startuml ERD Pertemuan 4
+skinparam linetype ortho
+skinparam class {
+  BackgroundColor #F5F8FF
+  BorderColor #4A6FA5
+  HeaderBackgroundColor #DDE8F7
+}
+skinparam title {
+  FontSize 16
+  FontStyle bold
+}
+
+title Skema Relasi Data Mahasiswa\npraktikum_web_2401020157
+
+entity "program_studi" {
+  * id : BIGINT UNSIGNED <<PK>>
+  --
+  * nama_prodi : VARCHAR(100) <<UNIQUE>>
+}
+
+entity "mahasiswa" {
+  * id : BIGINT UNSIGNED <<PK>>
+  --
+  * nim : CHAR(10) <<UNIQUE>>
+  * nama : VARCHAR(100)
+  * email : VARCHAR(100) <<UNIQUE>>
+  * usia : TINYINT UNSIGNED <<CHECK 17-60>>
+  * program_studi_id : BIGINT UNSIGNED <<FK>>
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+"program_studi" ||--o{ "mahasiswa" : memiliki
+
+legend right
+  PK = Primary Key
+  FK = Foreign Key ke program_studi.id
+  UNIQUE = tidak boleh ganda
+  ON UPDATE CASCADE / ON DELETE RESTRICT
+endlegend
+@enduml

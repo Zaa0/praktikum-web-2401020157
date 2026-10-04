@@ -1,0 +1,31 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.8 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36" version="28.2.8">
+  <diagram name="ERD Pertemuan 4" id="erd-p4-clean">
+    <mxGraphModel dx="1209" dy="938" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="583" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Skema Relasi Data Mahasiswa — praktikum_web_2401020157" style="text;html=1;fontSize=16;fontStyle=1;align=center;" parent="1" vertex="1">
+          <mxGeometry x="113" y="24" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="prodi" value="&lt;table border=&quot;1&quot; cellpadding=&quot;6&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;&lt;tr&gt;&lt;td bgcolor=&quot;#1F4E79&quot; align=&quot;center&quot;&gt;&lt;font color=&quot;#FFFFFF&quot;&gt;&lt;b&gt;A &amp;nbsp; program_studi&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;id : BIGINT UNSIGNED &lt;b&gt;[PK]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;nama_prodi : VARCHAR(100) &lt;b&gt;[UNIQUE]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="20" y="120" width="280" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="mhs" value="&lt;table border=&quot;1&quot; cellpadding=&quot;6&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;&lt;tr&gt;&lt;td bgcolor=&quot;#1F4E79&quot; align=&quot;center&quot;&gt;&lt;font color=&quot;#FFFFFF&quot;&gt;&lt;b&gt;B &amp;nbsp; mahasiswa&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;id : BIGINT UNSIGNED &lt;b&gt;[PK]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;nim : CHAR(10) &lt;b&gt;[UNIQUE]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;nama : VARCHAR(100)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;email : VARCHAR(100) &lt;b&gt;[UNIQUE]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;usia : TINYINT UNSIGNED (17-60)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;program_studi_id : BIGINT UNSIGNED &lt;b&gt;[FK]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;created_at, updated_at : TIMESTAMP&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;perimeterSpacing=0;" parent="1" vertex="1">
+          <mxGeometry x="500" y="120" width="310" height="255" as="geometry" />
+        </mxCell>
+        <mxCell id="rel" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;startArrow=none;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;strokeWidth=2;" parent="1" source="prodi" target="mhs" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl1" value="1" style="text;html=1;fontStyle=1;fontSize=15;" parent="1" vertex="1">
+          <mxGeometry x="319" y="146" width="20" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="lblN" value="N" style="text;html=1;fontStyle=1;fontSize=15;" parent="1" vertex="1">
+          <mxGeometry x="467" y="155" width="20" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cap" value="satu program studi &lt;br&gt;memiliki banyak mahasiswa" style="text;html=1;fontSize=11;fontColor=#000000;align=center;" parent="1" vertex="1">
+          <mxGeometry x="319" y="198" width="150" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
