@@ -1,14 +1,18 @@
+-- Pertemuan 4: DDL basis data praktikum_web_2401020157
+-- Membuat database latihan dengan karakter utf8mb4
 CREATE DATABASE IF NOT EXISTS praktikum_web_2401020157
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
 USE praktikum_web_2401020157;
 
+-- Tabel induk: menyimpan data program studi
 CREATE TABLE program_studi (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nama_prodi VARCHAR(100) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
+-- Tabel anak: menyimpan data mahasiswa, terhubung ke program_studi lewat foreign key
 CREATE TABLE mahasiswa (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nim CHAR(10) NOT NULL UNIQUE,
