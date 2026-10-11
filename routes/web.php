@@ -82,6 +82,7 @@ Route::post('/form-mahasiswa', function (Request $request) {
 
 Route::get('/mahasiswa/{nim?}', function (?string $nim = null) {
     try {
+        // Mengambil koneksi PDO dari konfigurasi Laravel (.env)
         $pdo = DB::connection()->getPdo();
         $sql = 'SELECT m.nim, m.nama, m.email, m.usia,
             p.nama_prodi
@@ -92,10 +93,13 @@ Route::get('/mahasiswa/{nim?}', function (?string $nim = null) {
             $sql .= ' WHERE m.nim = :nim';
         }
         $sql .= ' ORDER BY m.nim';
+        // Menyiapkan query tanpa menempelkan nilai NIM ke teks SQL
         $statement = $pdo->prepare($sql);
+        // Mengirim nilai NIM secara terpisah lewat placeholder :nim
         $statement->execute($nim !== null ? ['nim' => $nim] : []);
         $daftarMahasiswa = $statement->fetchAll(\PDO::FETCH_ASSOC);
         return view('mahasiswa', compact('daftarMahasiswa', 'nim'));
+    // Menangkap kegagalan koneksi maupun query
     } catch (\Throwable $error) {
         report($error);
         return response(
