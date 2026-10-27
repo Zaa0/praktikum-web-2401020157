@@ -65,6 +65,12 @@
     </form>
 
     <h2>Daftar Mahasiswa</h2>
+    @php
+        $parameterFilter = array_filter([
+            'q' => $kataKunci,
+            'program_studi_id' => $programStudiId,
+        ], fn ($nilai) => $nilai !== '' && $nilai !== null);
+    @endphp
     <table border="1" cellpadding="6" cellspacing="0">
         <tr>
             <th>NIM</th><th>Nama</th><th>Email</th>
@@ -78,13 +84,20 @@
                 <td>{{ $mahasiswa['usia'] }}</td>
                 <td>{{ $mahasiswa['nama_prodi'] }}</td>
                 <td>
-                    <a href="{{ route('mahasiswa.edit', $mahasiswa['id']) }}">
+                    <a href="{{ route('mahasiswa.edit', array_merge(['id' => $mahasiswa['id']], $parameterFilter)) }}">
                         Ubah
                     </a>
                     <form action="{{ route('mahasiswa.destroy', $mahasiswa['id']) }}"
                           method="POST">
                         @csrf
                         @method('DELETE')
+                        @if ($kataKunci !== '')
+                            <input type="hidden" name="q" value="{{ $kataKunci }}">
+                        @endif
+                        @if ($programStudiId !== '')
+                            <input type="hidden" name="program_studi_id"
+                                   value="{{ $programStudiId }}">
+                        @endif
                         <button type="submit"
                             onclick="return confirm('Hapus data ini?')">
                             Hapus

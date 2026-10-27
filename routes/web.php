@@ -214,7 +214,14 @@ Route::post('/mahasiswa', function (Request $request) {
     }
 })->name('mahasiswa.store');
 
-Route::get('/mahasiswa/{id}/edit', function (int $id) {
+Route::get('/mahasiswa/{id}/edit', function (
+    Request $request,
+    int $id
+) {
+    // Filter dibawa agar tetap aktif setelah data diubah
+    $kataKunci = trim((string) $request->query('q', ''));
+    $programStudiId = $request->query('program_studi_id', '');
+
     try {
         $pdo = DB::connection()->getPdo();
         $ambilMahasiswa = $pdo->prepare(
@@ -243,7 +250,9 @@ Route::get('/mahasiswa/{id}/edit', function (int $id) {
 
         return view('mahasiswa-edit', compact(
             'mahasiswa',
-            'daftarProgramStudi'
+            'daftarProgramStudi',
+            'kataKunci',
+            'programStudiId'
         ));
     } catch (\Throwable $error) {
         report($error);
@@ -274,6 +283,12 @@ Route::put('/mahasiswa/{id}', function (
         'usia.integer' => 'Usia harus berupa angka.',
         'program_studi_id.required' => 'Program studi wajib dipilih.',
     ]);
+
+    // Simpan filter yang sedang aktif untuk redirect setelah Update
+    $filter = array_filter([
+        'q' => trim((string) $request->input('q', '')),
+        'program_studi_id' => $request->input('program_studi_id', ''),
+    ], fn ($nilai) => $nilai !== '' && $nilai !== null);
 
     try {
         $pdo = DB::connection()->getPdo();
@@ -312,7 +327,7 @@ Route::put('/mahasiswa/{id}', function (
             'id' => $id,
         ]);
 
-        return redirect()->route('mahasiswa.index')->with(
+        return redirect()->route('mahasiswa.index', $filter)->with(
             'berhasil',
             'Data mahasiswa berhasil diperbarui.'
         );
@@ -326,7 +341,16 @@ Route::put('/mahasiswa/{id}', function (
     }
 })->name('mahasiswa.update');
 
-Route::delete('/mahasiswa/{id}', function (int $id) {
+Route::delete('/mahasiswa/{id}', function (
+    Request $request,
+    int $id
+) {
+    // Simpan filter yang sedang aktif untuk redirect setelah Delete
+    $filter = array_filter([
+        'q' => trim((string) $request->input('q', '')),
+        'program_studi_id' => $request->input('program_studi_id', ''),
+    ], fn ($nilai) => $nilai !== '' && $nilai !== null);
+
     try {
         $pdo = DB::connection()->getPdo();
         $hapus = $pdo->prepare(
@@ -335,20 +359,20 @@ Route::delete('/mahasiswa/{id}', function (int $id) {
         $hapus->execute(['id' => $id]);
 
         if ($hapus->rowCount() === 0) {
-            return redirect()->route('mahasiswa.index')->with(
+            return redirect()->route('mahasiswa.index', $filter)->with(
                 'gagal',
                 'Data mahasiswa tidak ditemukan.'
             );
         }
 
-        return redirect()->route('mahasiswa.index')->with(
+        return redirect()->route('mahasiswa.index', $filter)->with(
             'berhasil',
             'Data mahasiswa berhasil dihapus.'
         );
     } catch (\Throwable $error) {
         report($error);
 
-        return redirect()->route('mahasiswa.index')->with(
+        return redirect()->route('mahasiswa.index', $filter)->with(
             'gagal',
             'Data gagal dihapus. Periksa relasi atau koneksi.'
         );

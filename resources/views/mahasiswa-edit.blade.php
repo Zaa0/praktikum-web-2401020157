@@ -24,6 +24,14 @@
           method="POST">
         @csrf
         @method('PUT')
+        @if ($kataKunci !== '')
+            <input type="hidden" name="q"
+                   value="{{ old('q', $kataKunci) }}">
+        @endif
+        @if ($programStudiId !== '')
+            <input type="hidden" name="program_studi_id"
+                   value="{{ old('program_studi_id', $programStudiId) }}">
+        @endif
         <p>NIM<br>
             <input type="text" name="nim"
                    value="{{ old('nim', $mahasiswa['nim']) }}">
